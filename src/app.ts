@@ -12,6 +12,22 @@ const aiAgentScheduler = new AIAgentScheduler();
 app.use(cors());
 app.use(express.json());
 
+// Root route for Railway health check
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    message: 'Lumina Market Backend API',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/api/health',
+      aiAgent: '/api/ai-agent/*',
+      lpAgent: '/api/lp-agent/*',
+      strategies: '/api/strategies/*',
+      execution: '/api/execution/*'
+    }
+  });
+});
+
 // Basic Health Check
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
